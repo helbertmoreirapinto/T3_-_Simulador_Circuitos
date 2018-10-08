@@ -5,25 +5,65 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define AND     A
-#define OR      O
-#define NAND    D
-#define NOR     R
-#define XOR     X
-#define NOT     N
-#define ENTRADA E
+#define MONTAGEM_NO_A_NO        0
+#define MONTAGEM_ENTRADA_DIRETA 1
 
-#define MONTAGEM_LINHA  0
-#define MONTAGEM_NO     1
+enum TP{
+    PORTA_AND = 'A',
+    PORTA_OR = 'O',
+    PORTA_NAND = 'D',
+    PORTA_NOR = 'R',
+    PORTA_XOR = 'X',
+    PORTA_NOT = 'N',
+    ENTRADA = 'E'
+} TipoPorta;
+
+struct Porta{
+    struct Porta* pai;
+    struct Porta* esq;
+    struct Porta* dir;
+    char tipoPorta;
+    char tag[3];
+};
+
+typedef struct Porta Porta;
+typedef Porta* Porta_PTR;
 
 int main(){
     int tipoMontagem;
     int qtdLinhas;
-    fscanf("%d",&tipoMontagem);
-    if(tipoMontagem == MONTAGEM_LINHA){
-        fscanf("%d",&qtdLinhas);
-    }else if(tipoMontagem == MONTAGEM_NO){
+    setbuf(stdin, NULL);
+    fscanf(stdin, "%d", &tipoMontagem);
+    Porta_PTR no;
+    if(tipoMontagem == MONTAGEM_NO_A_NO){
+        setbuf(stdin, NULL);
+        fscanf(stdin, "%d",&qtdLinhas);
 
+        getchar();
+        for(int i = 0; i < qtdLinhas; i++){
+            no = (Porta_PTR) calloc(1, sizeof(Porta));
+            no->tipoPorta = fgetc(stdin);
+            fscanf(stdin, "%s", no->tag);
+            no->tag[2] = '\0';
+            printf("%c%s\n", no->tipoPorta, no->tag);
+
+            if(no->tipoPorta != PORTA_NOT){
+                system("PAUSE");
+                no = (Porta_PTR) calloc (1, sizeof(Porta));
+                no->tipoPorta = fgetc(stdin);
+                fscanf(stdin, "%s", no->tag);
+                no->tag[2] = '\0';
+                printf("%c%s\n", no->tipoPorta, no->tag);
+            }
+
+            no = (Porta_PTR) calloc(1, sizeof(Porta));
+            no->tipoPorta = fgetc(stdin);
+            fscanf(stdin, "%s", no->tag);
+            no->tag[2] = '\0';
+            printf("%c%s\n", no->tipoPorta, no->tag);
+        }
+    }else if(tipoMontagem == MONTAGEM_ENTRADA_DIRETA){
+        getchar();
     }
     return 0;
 }
