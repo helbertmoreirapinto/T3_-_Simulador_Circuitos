@@ -1,5 +1,6 @@
 # depslib dependency file v1.0
-1539003275 source:c:\users\helbert\documents\github\t3_-_simulador_circuitos\main.c
+1539059704 source:c:\users\helbert\documents\github\t3_-_simulador_circuitos\main.c
 	<stdio.h>
 	<stdlib.h>
+	<string.h>
 
